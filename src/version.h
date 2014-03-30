@@ -1,5 +1,5 @@
 // Copyright (c) 2012 The Bitcoin developers
-// Copyright (c) 2012-2013 The PPCoin developers
+// Copyright (c) 2012-2013 The Etercoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_VERSION_H
@@ -27,23 +27,23 @@ extern const std::string CLIENT_NAME;
 extern const std::string CLIENT_BUILD;
 extern const std::string CLIENT_DATE;
 
-// ppcoin version - intended for display purpose ONLY
-#define PPCOIN_VERSION_MAJOR       0
-#define PPCOIN_VERSION_MINOR       3
-#define PPCOIN_VERSION_REVISION    0
-#define PPCOIN_VERSION_BUILD       0
+// etercoin version - intended for display purpose ONLY
+#define ETROIN_VERSION_MAJOR       0
+#define ETROIN_VERSION_MINOR       4
+#define ETROIN_VERSION_REVISION    0
+#define ETROIN_VERSION_BUILD       0
 
-static const int PPCOIN_VERSION =
-                           1000000 * PPCOIN_VERSION_MAJOR
-                         +   10000 * PPCOIN_VERSION_MINOR
-                         +     100 * PPCOIN_VERSION_REVISION
-                         +       1 * PPCOIN_VERSION_BUILD;
+static const int ETROIN_VERSION =
+                           1000000 * ETROIN_VERSION_MAJOR
+                         +   10000 * ETROIN_VERSION_MINOR
+                         +     100 * ETROIN_VERSION_REVISION
+                         +       1 * ETROIN_VERSION_BUILD;
 
 //
 // network protocol versioning
 //
 
-static const int PROTOCOL_VERSION = 60003;
+static const int PROTOCOL_VERSION = 60004;
 
 // earlier versions not supported as of Feb 2012, and are disconnected
 // NOTE: as of bitcoin v0.6 message serialization (vSend, vRecv) still
