@@ -27,8 +27,7 @@ namespace Checkpoints
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
         ( 0, hashGenesisBlockOfficial )
-        //TODO ( 19080, uint256("0x000000000000bca54d9ac17881f94193fd6a270c1bb21c3bf0b37f588a40dbd7"))
-        //TODO ( 30583, uint256("0xd39d1481a7eecba48932ea5913be58ad3894c7ee6d5a8ba8abeb772c66a6696e"))
+        ( 1, uint256("000000f047596a863dbbb6e9942b4d42f08cc473298c0a05af89636899456f52"))
         ;
 
     bool CheckHardened(int nHeight, const uint256& hash)
@@ -362,6 +361,7 @@ namespace Checkpoints
         // sync-checkpoint should always be accepted block
         assert(mapBlockIndex.count(hashSyncCheckpoint));
         const CBlockIndex* pindexSync = mapBlockIndex[hashSyncCheckpoint];
+        return false;
         return (pindexSync->GetBlockTime() + nSeconds < GetAdjustedTime());
     }
 }

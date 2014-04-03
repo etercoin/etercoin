@@ -35,7 +35,7 @@ set<pair<COutPoint, unsigned int> > setStakeSeen;
 uint256 hashGenesisBlock = hashGenesisBlockOfficial;
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 24);
 static CBigNum bnInitialHashTarget(~uint256(0) >> 24);
-static CBigNum bnSecondHashTarget(~uint256(0) >> 40);
+static CBigNum bnSecondHashTarget(~uint256(0) >> 28);
 unsigned int nStakeMinAge = STAKE_MIN_AGE;
 int nCoinbaseMaturity = COINBASE_MATURITY_ETR;
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -832,7 +832,7 @@ int64 GetProofOfWorkReward(unsigned int nBits, unsigned int nHeight, unsigned in
 {
     int64 nSubsidy = COIN;
 
-    if (nTime >= 1396310400 && nHeight > 144)
+    if (nTime >= 1396310400 && nHeight > 500)
     {
         CBigNum bnSubsidyLimit = MAX_MINT_PROOF_OF_WORK;
         CBigNum bnTarget;
@@ -880,8 +880,8 @@ int64 GetProofOfStakeReward(int64 nCoinAge)
     return nSubsidy;
 }
 
-static const int64 nTargetTimespan = 7 * 24 * 60 * 60;  // one day
-static const int64 nTargetSpacingWorkMax = 12 * STAKE_TARGET_SPACING; // 2-hour
+static const int64 nTargetTimespan = 7 * 24 * 60 * 60;
+static const int64 nTargetSpacingWorkMax = 12 * STAKE_TARGET_SPACING; // x * 10 min
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -927,8 +927,8 @@ unsigned int static GetNextTargetRequired(const CBlockIndex* pindexLast, bool fP
     int64 _nTargetTimespan = nTargetTimespan;
 
     // increase nTargetTimespan to from (1 week / 30) to (1 week) gradually over the year
-    if (pindexPrev->GetBlockTime() < 1425168000)
-        _nTargetTimespan /= 1 + 30 * (1 - (pindexPrev->GetBlockTime() - 1391212800) / (1425168000.0 - 1391212800.0));
+    if (pindexPrev->GetBlockTime() < 1427846400)
+       _nTargetTimespan /= 1 + 7 * 24 / 2 * (1 - (pindexPrev->GetBlockTime() - 1396310400) / (1427846400.0 - 1396310400.0));
     // printf("nTargetTimespan=%"PRI64d"\n", _nTargetTimespan);
 
     // etercoin: target change every block
@@ -1890,7 +1890,7 @@ bool CBlock::CheckBlock() const
         return DoS(50, error("CheckBlock() : coinstake timestamp violation nTimeBlock=%u nTimeTx=%u", GetBlockTime(), vtx[1].nTime));
 
     // Check coinbase reward
-    if (vtx[0].nTime >= 1393632000 && vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
+    if (vtx[0].nTime > 1396569600 && vtx[0].GetValueOut() > (IsProofOfWork()? (GetProofOfWorkReward(nBits) - vtx[0].GetMinFee() + MIN_TX_FEE) : 0))
         return DoS(50, error("CheckBlock() : coinbase reward exceeded %s > %s", 
                    FormatMoney(vtx[0].GetValueOut()).c_str(),
                    FormatMoney(IsProofOfWork()? GetProofOfWorkReward(nBits) : 0).c_str()));
